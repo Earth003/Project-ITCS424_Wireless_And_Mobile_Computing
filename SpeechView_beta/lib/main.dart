@@ -138,6 +138,7 @@ class _SecondScreenState extends State<SecondScreen> {
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
+      debugPrint(result.recognizedWords);
     });
   }
 
@@ -158,7 +159,7 @@ class _SecondScreenState extends State<SecondScreen> {
   //SPEECH TO TEXT HERE************************************************
   @override
   Widget build(BuildContext context) {
-
+    String words = _lastWords;
     
   
     return Scaffold(
@@ -187,16 +188,14 @@ class _SecondScreenState extends State<SecondScreen> {
             // //     'Recognized words:',
             // //     style: TextStyle(fontSize: 20, color: Colors.green),
             // // ),
-
-            
               Container(
                 height: 200,
                 width: 200,
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.all(16), 
                   child: Text(
                     // If listening is active show the recognized words
                     _speechToText.isListening
-                        ? '$_lastWords'
+                        ? '$_lastWords' 
                         // If listening isn't active but could be tell the user
                         // how to start it, otherwise indicate that speech
                         // recognition is not yet ready or not supported on
@@ -208,9 +207,10 @@ class _SecondScreenState extends State<SecondScreen> {
               ),
             
 
-              // Text(
-              //   //'Second Page',
-              //   widget.data,
+              // const Text(
+              //   // words.toString(),
+              //   'Second Page',
+              //   // widget.data,
               //   style: TextStyle(fontSize: 20, color: Colors.green),
               // ),
               
@@ -218,7 +218,6 @@ class _SecondScreenState extends State<SecondScreen> {
               
               ElevatedButton(
                 onPressed: () {
-
                   //sending back transcribed voice input **NOT implemented yet, its a place holder.
                   // Navigator.of(context).push(
 			            //   MaterialPageRoute(
