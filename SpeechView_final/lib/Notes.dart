@@ -21,7 +21,7 @@ class _NotesPageState extends State<NotesPage> {
   void initState() {
     super.initState();
     _initSpeech();
-
+    _readNote();
     notesDescriptionMaxLenth =
         notesDescriptionMaxLines * notesDescriptionMaxLines;
   }
@@ -37,8 +37,14 @@ class _NotesPageState extends State<NotesPage> {
   //SPEECH TO TEXT HERE************************************************
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
+  bool recording = false;
   String _lastWords = '';
   @override
+
+  void _readNote() async {
+    await readContent();
+    setState(() {});
+  }
 
   // This has to happen only once per app
   void _initSpeech() async {
@@ -51,7 +57,7 @@ class _NotesPageState extends State<NotesPage> {
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
-      debugPrint(result.recognizedWords);
+      //debugPrint(result.recognizedWords);
     });
   }
 
@@ -59,6 +65,7 @@ class _NotesPageState extends State<NotesPage> {
   void _startListening() async {
     await _speechToText.listen(onResult: _onSpeechResult);
     setState(() {});
+    // recording = false;
   }
 
   // Manually stop the active speech recognition session
@@ -68,6 +75,7 @@ class _NotesPageState extends State<NotesPage> {
   void _stopListening() async {
     await _speechToText.stop();
     setState(() {});
+    _lastWords = '';
   }
 
   @override
@@ -121,6 +129,7 @@ class _NotesPageState extends State<NotesPage> {
                     deletedNoteDescription = noteDescription[index];
                     noteHeading.removeAt(index);
                     noteDescription.removeAt(index);
+                    writeContent();
                     Scaffold.of(context).showSnackBar(
                       new SnackBar(
                         backgroundColor: Colors.purple,
@@ -143,6 +152,7 @@ class _NotesPageState extends State<NotesPage> {
                                         }
                                         deletedNoteHeading = "";
                                         deletedNoteDescription = "";
+                                        writeContent();
                                       });
                                     },
                                     child: new Text(
@@ -318,8 +328,11 @@ class _NotesPageState extends State<NotesPage> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          GestureDetector(
+                          GestureDetector( //
                             onTap: () {
+                              if(recording == true){
+                                recording = false;
+                              }
                               if (_formKey.currentState.validate()) {
                                 setState(() {
                                   noteHeading.add(noteHeadingController.text);
@@ -331,7 +344,7 @@ class _NotesPageState extends State<NotesPage> {
                                 writeContent();
                                 Navigator.pop(context);
                               }
-                              print(noteHeadingController.text);
+                              //print(noteHeadingController.text);
                             },
                             child: Container(
                               child: Row(
@@ -411,15 +424,20 @@ class _NotesPageState extends State<NotesPage> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            if (_speechToText.isNotListening) {
+                            recording = !(recording);
+                            if (_speechToText.isNotListening && recording) {
                               _startListening();
+                              print('listening');
                             } else {
                               noteDescriptionController.text += _lastWords;
+                              _lastWords = "";
+                              print("stop listening. output ->");
                               print(noteDescription);
                               _stopListening();
                             }
                           });
-                          print(noteHeadingController.text);
+                          // print("heading");
+                          // print(noteHeadingController.text);
                         },
                         child: Container(
                           child: Row(
@@ -435,6 +453,14 @@ class _NotesPageState extends State<NotesPage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
+                              // TextButton(
+                              //   style: ButtonStyle(
+                              //     foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                              //   ),
+                              //   onPressed: () { },
+                              //   child: Text('Record'),
+                              // )
+
                             ],
                           ),
                         ),
@@ -489,6 +515,9 @@ class _NotesPageState extends State<NotesPage> {
                           ),
                           GestureDetector(
                             onTap: () {
+                              if(recording == true){
+                                recording = false;
+                              }
                               if (_formKey.currentState.validate()) {
                                 setState(() {
                                   noteHeading[edit_index] =
@@ -498,9 +527,10 @@ class _NotesPageState extends State<NotesPage> {
                                   noteHeadingController.clear();
                                   noteDescriptionController.clear();
                                 });
-                                writeContent();
+                                //writeContent();
                                 Navigator.pop(context);
                               }
+                              writeContent();
                               print(noteHeadingController.text);
                             },
                             child: Container(
@@ -581,27 +611,28 @@ class _NotesPageState extends State<NotesPage> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            if (_speechToText.isNotListening) {
+                            recording = !(recording);
+                            if (_speechToText.isNotListening && recording) {
                               _startListening();
+                              print('listening');
                             } else {
+                              print('not listening');
                               noteDescriptionController.text += _lastWords;
-                              print(noteDescription);
+                              // print(noteDescription);
+                              print(_lastWords);
                               _stopListening();
                             }
                           });
-
-                          print("Notes.dart LineNo:452");
-
-                          print(noteHeadingController.text);
+                          writeContent();
+                          // print("edit output");
+                          // print(noteHeadingController.text);
                         },
                         child: Container(
                           child: Row(
                             children: [
                               Text(
                                 //button
-                                _speechToText.isNotListening
-                                    ? "Record"
-                                    : "Recording",
+                                _speechToText.isNotListening ? "Record" : "Recording",
                                 style: TextStyle(
                                   fontSize: 20.00,
                                   color: Colors.blue,

@@ -18,16 +18,17 @@ String deletedNoteHeading = "";
 String deletedNoteDescription = "";
 
 Future<String> get _localPath async {
-  // final directory = await getApplicationDocumentsDirectory();
+  final directory = await getApplicationDocumentsDirectory();
   // For your reference print the AppDoc directory
-  final directory = 'D:\\Flutter files\\Week5 clone github\\ITCS-424\\labs\\5-week\\Project_Wireless\\SpeechView';
-  //print(directory.path);
-  return directory;
+  //final directory = 'Phone\\Documents';
+  //print("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+  print(directory.path);
+  return directory.path;
 }
 
 Future<File> get _localFile async {
   final path = await _localPath;
-  return File('$path\\speechview_data.txt');
+  return File('$path/speechview_data.txt');
 }
 
 Future writeContent() async {
@@ -44,23 +45,28 @@ Future writeContent() async {
   }
 }
 
-Future readcontent() async {
+void readContent() async {
+  int lineIndex = 0;
   try {
-    int  lineIndex = 0;
     final file = await _localFile;
     Stream<String> lines = file.openRead().transform(utf8.decoder).transform(LineSplitter()); // Decode bytes to UTF-8. // Convert stream to individual lines.
 
     await for (var line in lines) {
-      if (lineIndex%2 == 0) {
+      if (lineIndex % 2 == 0) {
+        debugPrint('Heading: $line');
         noteHeading.add(line);
       } else {
+        debugPrint('Description: $line');
         noteDescription.add(line);
       }
       lineIndex += 1;
     }
+    //print('File is now closed.');
   } catch (e) {
-    print('Error: $e');
+    //Directory directory = (await _localPath) as Directory;
+    writeContent();
   }
+
 }
 
 List<Color> noteColor = [

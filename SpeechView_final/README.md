@@ -1,25 +1,45 @@
-# SpeechView Project
+## Note Taking App
 
-    This project is about utilizing flutter library to recognize voice input 
-    and convert it into text string which will be displayed on the user's screen.
-    The project aim is to create an application which append the text from 
-    speech to text into a note file to assist noting in another way.
+[![BUILD](https://img.shields.io/badge/Build-Passing-<COLOR>.svg)](https://github.com/vijayinyoutube/NotesApp)
+[![vijaycreations](https://img.shields.io/badge/Follow_me-vijaycreations-orange.svg?&logo=youtube&logoColor=orange)](https://www.youtube.com/channel/UCBC_Z7jla1GSITcqLKAtPxQ)
+[![Repo Status](https://img.shields.io/badge/RepoStatus-Active-blueviolet.svg)](https://github.com/vijayinyoutube/NotesApp)
+[![MIT license](https://img.shields.io/badge/License-MIT-red.svg)](https://github.com/vijayinyoutube/NotesApp)
+[![Flutter](https://img.shields.io/badge/_Flutter_-App-grey.svg?&logo=Flutter&logoColor=white&labelColor=blue)](https://github.com/vijayinyoutube/NotesApp) 
 
-# Current progress
+<p align="center">
+<img src="https://user-images.githubusercontent.com/58719230/96370806-bda11700-117c-11eb-8497-d126400a9c68.png" width="100%">
+</p>
 
-     Speech to text is implemented, the application pages are organized.
-     The Microphone function for speech to text works properly only for 
-     website (eg.chrome and edge). Currently, the speech to text is not
-     working as intended for mobile phone.
+## Flutter
+[Flutter](https://flutter.dev/) is a crossplatfrom UI tool kit that helps in developing native Android and iOS app from a single code base.
+
+## App
+
+A simple note taking app
+
+Check out the video tutorial   👉 : https://youtu.be/Qq8vf-_Ls68
 
 
-Note taking application temmplate by vijaycreations
-https://www.youtube.com/channel/UCBC_Z7jla1GSITcqLKAtPxQ
+To know more awesome content about Flutter., 
 
-Video tutorials by vijaycreations can be found here
-https://youtu.be/Qq8vf-_Ls68
+Visit my channel 👉 : https://www.youtube.com/channel/UCBC_Z7jla1GSITcqLKAtPxQ
+
+## Dependencies
+
+```pubspec.yaml
+ auto_size_text: ^2.1.0
+```
+
+## Sample Results
+
+<img src="https://user-images.githubusercontent.com/58719230/96371015-76ffec80-117d-11eb-9ee2-4264c7b2c2b6.png">
+
+
+
+
 
 ## License
+
 ```
 MIT License
 
